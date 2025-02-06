@@ -29,7 +29,7 @@ public class ListingsService {
 		List<Listing> listingsList = new ArrayList<>();
 
 		for (Document d: listingDocuments){
-			System.out.println("Document" + d);
+			// System.out.println("Document" + d);
 			Listing l = Listing.toListing(d);
 			listingsList.add(l);
 		}
@@ -39,6 +39,10 @@ public class ListingsService {
 
 
 	//TODO: Task 4
+	public void getListingDetails(String name){
+		Document details = listingsRepository.getListingDetails(name);
+		System.out.println(details);
+	}
 	
 
 	//TODO: Task 5

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -63,8 +64,15 @@ public class ListingsController {
 		return mav;
 	}
 
-
 	//TODO: Task 4
+	@GetMapping("/listing/details/{name}")
+	public ModelAndView getListingDetails(@PathVariable String name){
+		ModelAndView mav = new ModelAndView();
+		System.out.println(name);
+		listingsService.getListingDetails(name);
+
+		return mav;
+	}
 	
 
 	//TODO: Task 5

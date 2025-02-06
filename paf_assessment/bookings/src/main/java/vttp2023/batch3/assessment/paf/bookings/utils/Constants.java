@@ -10,4 +10,8 @@ public class Constants {
     public static final String MONGO_F_NAME = "name";
     public static final String MONGO_F_STREET = "address.street";
     public static final String MONGO_F_IMAGES = "images.picture_url";
+    public static final String MONGO_F__ID = "_id";
+    public static final String MONGO_F_DESCRIPTION = "description";
+    public static final String MONGO_F_SUBURB = "address.suburb";
+    public static final String MONGO_F_AMENITIES = "amenities";
 }

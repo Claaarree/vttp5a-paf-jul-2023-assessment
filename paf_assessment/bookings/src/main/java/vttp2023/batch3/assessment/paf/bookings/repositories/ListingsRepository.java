@@ -17,11 +17,15 @@ import org.springframework.stereotype.Repository;
 
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_C_LISTINGS;
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_ACCOMMODATES;
+import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_AMENITIES;
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_COUNTRY;
+import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_DESCRIPTION;
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_IMAGES;
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_NAME;
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_PRICE;
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_STREET;
+import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_SUBURB;
+import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F__ID;
 
 @Repository
 public class ListingsRepository {
@@ -74,6 +78,34 @@ public class ListingsRepository {
 
 
 	//TODO: Task 4
+	// db.listings.find(
+    // {name: 'Sydney Hyde Park City Apartment (checkin from 6am)'}
+	// ).projection(
+    //     {_id:1, description: 1, 
+    //     'address.street':1, 
+    //     'address.suburb': 1,
+    //     'address.country':1,
+    //     "images.picture_url":1, 
+    //     price:1, 
+    //     amenities:1
+    //     }
+	// )
+	public Document getListingDetails(String name){
+		Criteria criteria = Criteria.where("name")
+				.is(name);
+		Query query = Query.query(criteria);
+
+		query.fields().include(
+				MONGO_F__ID, MONGO_F_DESCRIPTION,
+				MONGO_F_STREET,MONGO_F_SUBURB,
+				MONGO_F_COUNTRY, MONGO_F_IMAGES,
+				MONGO_F_PRICE, MONGO_F_AMENITIES);
+
+		Document details = template
+				.findOne(query, Document.class, MONGO_C_LISTINGS);
+		
+		return details;
+	}
 	
 
 	//TODO: Task 5
