@@ -6,11 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import vttp2023.batch3.assessment.paf.bookings.model.Listing;
 import vttp2023.batch3.assessment.paf.bookings.services.ListingsService;
 
 @Controller
@@ -55,7 +55,9 @@ public class ListingsController {
 			mav.addObject("errors", validation);
 		} else {
 			mav.setViewName("view2");
-			
+			List<Listing> listingsList = listingsService.getSearchListings(country, persons, min, max);
+			mav.addObject("listings", listingsList);
+			mav.addObject("country", country);
 		}
 
 		return mav;

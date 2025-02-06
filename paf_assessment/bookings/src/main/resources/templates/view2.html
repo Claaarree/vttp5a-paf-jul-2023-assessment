@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View 2</title>
+</head>
+<body>
+    <h1>Listings for <span th:text="${country}"></span></h1><br><br>
+    <a th:href="@{/}">Back</a><br><br>
+    <p th:if="${#lists.isEmpty(listings)}">
+        Your search has returned no results! Please go back and try again
+    </p>
+    <table th:unless="${#lists.isEmpty(listings)}" style="border: solid;">
+        <thead>
+            <tr>
+                <th style="border: solid;">Name</th>
+                <th style="border: solid;">Price</th>
+                <th style="border: solid;">Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            <span th:each="l : ${listings}">
+                <tr>
+                    <td style="border: solid;" th:text="${l.name}"></td>
+                    <td style="border: solid;" th:text="${l.price}"></td>
+                    <td style="border: solid;"><img th:src="${l.image}"></td>
+                    <td style="border: solid;">
+                        <a>Details</a>
+                    </td>
+                </tr>
+            </span>
+        </tbody>
+    </table>
+</body>
+</html>
