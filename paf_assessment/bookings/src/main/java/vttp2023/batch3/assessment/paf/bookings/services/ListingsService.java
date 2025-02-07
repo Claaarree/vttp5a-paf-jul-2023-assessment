@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vttp2023.batch3.assessment.paf.bookings.model.Listing;
+import vttp2023.batch3.assessment.paf.bookings.model.ListingDetails;
 import vttp2023.batch3.assessment.paf.bookings.repositories.ListingsRepository;
 
 @Service
@@ -39,9 +40,10 @@ public class ListingsService {
 
 
 	//TODO: Task 4
-	public void getListingDetails(String name){
+	public ListingDetails getListingDetails(String name){
 		Document details = listingsRepository.getListingDetails(name);
 		System.out.println(details);
+		return ListingDetails.toListingDetails(details);
 	}
 	
 
