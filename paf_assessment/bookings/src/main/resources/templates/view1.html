@@ -31,7 +31,7 @@
     </form>
     <ul th:if="${errors}">
         <span th:each="err : ${errors}">
-            <li th:text="${err}"></li>
+            <li style="color: red;" th:text="${err}"></li>
         </span>
     </ul>
 </body>

@@ -14,4 +14,19 @@ public class Constants {
     public static final String MONGO_F_DESCRIPTION = "description";
     public static final String MONGO_F_SUBURB = "address.suburb";
     public static final String MONGO_F_AMENITIES = "amenities";
+
+    public static final String MYSQL_CHECK_VACANCY = """
+        select * from acc_occupancy
+                where acc_id = ?;
+        """;
+
+    public static final String MYSQL_INSERT_RESERVATION = """
+        INSERT into reservations (resv_id, name, email, acc_id, arrival_date, duration)
+            values (?, ?, ?, ?, ?, ?);
+        """;
+
+    public static final String MYSQL_UPDATE_VACANCY = """
+        update acc_occupancy SET vacancy = ?
+	        where acc_id = ?;
+        """;
 }

@@ -6,12 +6,8 @@ import org.bson.Document;
 
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F__ID;
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_AMENITIES;
-import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_COUNTRY;
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_DESCRIPTION;
-import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_IMAGES;
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_PRICE;
-import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_STREET;
-import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_SUBURB;
 
 public class ListingDetails {
     private String accomodationId;

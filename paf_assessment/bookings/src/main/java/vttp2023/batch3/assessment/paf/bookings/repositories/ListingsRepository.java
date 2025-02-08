@@ -1,5 +1,6 @@
 package vttp2023.batch3.assessment.paf.bookings.repositories;
 
+import java.util.Date;
 import java.util.List;
 
 import org.bson.Document;
@@ -13,6 +14,8 @@ import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
 import org.springframework.data.mongodb.core.aggregation.SortOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_C_LISTINGS;
@@ -26,12 +29,18 @@ import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_PR
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_STREET;
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F_SUBURB;
 import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MONGO_F__ID;
+import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MYSQL_CHECK_VACANCY;
+import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MYSQL_INSERT_RESERVATION;
+import static vttp2023.batch3.assessment.paf.bookings.utils.Constants.MYSQL_UPDATE_VACANCY;
 
 @Repository
 public class ListingsRepository {
 
 	@Autowired
 	private MongoTemplate template;
+
+	@Autowired
+	private JdbcTemplate mysqlTemplate;
 
 	//TODO: Task 2
 	// db.listings.distinct('address.country')
@@ -109,6 +118,25 @@ public class ListingsRepository {
 	
 
 	//TODO: Task 5
+	public Integer getVacancy(String accommodationID){
+		SqlRowSet rs = mysqlTemplate.queryForRowSet(MYSQL_CHECK_VACANCY, accommodationID);
+		rs.next();
+		Integer vacancy = rs.getInt("vacancy");
+
+		return vacancy;
+	}
+
+	public void makeReservation(String reservationId, String username, String email, 
+	String accommodationId, Date arrival, Integer duration) {
+		mysqlTemplate.update(MYSQL_INSERT_RESERVATION, 
+				reservationId, username, 
+				email, accommodationId, 
+				arrival, duration);
+	}
+
+	public void updateVacancy(Integer updatedVacancy, String accommodationId) {
+		mysqlTemplate.update(MYSQL_UPDATE_VACANCY, updatedVacancy, accommodationId);
+	}
 
 
 }

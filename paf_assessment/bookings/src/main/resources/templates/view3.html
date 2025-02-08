@@ -39,25 +39,26 @@
     </table>
 
     <h1>Bookings</h1>
-    <form th:action="@{/}" method="post">
+    <form th:action="@{/listing/book/{id} (id = ${details.accomodationId})}" method="post">
         <div>
             <label for="username">Name:</label>
-            <input type="text" id="username" name="username" placeholder="Your name">
+            <input type="text" id="username" name="username" placeholder="Your name" required>
         </div>
         <div>
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Your email">
+            <input type="email" id="email" name="email" placeholder="Your email" required>
         </div>
         <div>
             <label for="arrival">Arrival:</label>
-            <input type="date" id="arrival" name="arrival">
+            <input type="date" id="arrival" name="arrival" required>
         </div>
         <div>
             <label for="stay">Stay:</label>
-            <input type="number" id="stay" name="stay">days
+            <input type="number" id="stay" name="stay" required min="1">days
         </div>
         <br>
-        <button type="submit">Book</button>
+        <button type="submit">Book</button><br>
+        <p style="color: red;" th:if="${error}" th:text="${error}"></p>
     </form>
 </body>
 </html>

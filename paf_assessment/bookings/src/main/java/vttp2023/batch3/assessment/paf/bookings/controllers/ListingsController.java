@@ -2,12 +2,13 @@ package vttp2023.batch3.assessment.paf.bookings.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -81,17 +82,41 @@ public class ListingsController {
 
 	//TODO: Task 4
 	@GetMapping("/listing/details/{name}")
-	public ModelAndView getListingDetails(@PathVariable String name){
+	public ModelAndView getListingDetails(@PathVariable String name, HttpSession session){
 		ModelAndView mav = new ModelAndView("view3");
-		System.out.println(name);
+		// System.out.println(name);
 		ListingDetails ld = listingsService.getListingDetails(name);
 		mav.addObject("details", ld);
+		session.setAttribute("details", ld);
 
 		return mav;
 	}
 	
 
 	//TODO: Task 5
+	@PostMapping("/listing/book/{id}")
+	public ModelAndView handleBooking(@PathVariable String id, 
+	@RequestBody MultiValueMap<String, String> booking, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		Integer stay = Integer.parseInt(booking.getFirst("stay"));
+
+		Integer updatedVacancy = listingsService.checkVacancy(id, stay);
+
+		if (updatedVacancy >= 0){
+			String reservationId = listingsService
+					.makeReservation(booking, id, updatedVacancy);
+			mav.addObject("reservation", reservationId);
+			mav.setViewName("view4");
+		} else {
+			String error = "The accomodation is unavailable for the required length of stay!";
+			mav.addObject("error", error);
+			ListingDetails ld = (ListingDetails)session.getAttribute("details");
+			mav.addObject("details", ld);
+			mav.setViewName("view3");
+		}
+
+		return mav;
+	}
 
 
 }
